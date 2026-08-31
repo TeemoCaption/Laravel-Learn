@@ -14,7 +14,9 @@ Route::get('/users', function (Request $request) {
     // 因此不需要自己寫 new Request()
 
     return Inertia::render('Users/Index');
-});
+})
+    // 替使用者列表 Route 命名
+    ->name('users.index');
 
 Route::get('/users/{id}', function (Request $request, string $id) {
     // Request 是 Laravel Service Container 自動注入的 Dependency
@@ -26,9 +28,9 @@ Route::get('/users/{id}', function (Request $request, string $id) {
     ]);
 })
     // 限制 {id} 必須是數字，否則 Laravel 回傳 404
-    ->whereNumber('id');
+    ->whereNumber('id')
+    // 替使用者詳細資料 Route 命名
+    ->name('users.show');
 
 // 將舊的會員網址重新導向新的 /users
 Route::redirect('/members', '/users');
-
-require __DIR__ . '/settings.php';
