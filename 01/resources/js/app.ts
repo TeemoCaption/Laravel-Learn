@@ -19,6 +19,9 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
+            // 錯誤頁面使用獨立版面，不顯示應用程式側邊欄
+            case name === 'Errors/NotFound':
+                return null;
             // 使用者頁面採用無側邊欄的獨立畫面
             case name.startsWith('Users/'):
                 return null;
