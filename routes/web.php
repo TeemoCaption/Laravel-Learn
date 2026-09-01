@@ -23,18 +23,22 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    // 顯示使用者列表頁面。
-    Route::get('/users', function (Request $request) {
-        return Inertia::render('Users/Index');
-    })->name('users.index');
+    // 使用者相關 Route 除了必須登入之外，
+    // 每位使用者每分鐘最多只能存取 10 次。
+    Route::middleware('throttle:users')->group(function () {
+        // 顯示使用者列表頁面。
+        Route::get('/users', function (Request $request) {
+            return Inertia::render('Users/Index');
+        })->name('users.index');
 
-    // 依照網址中的 user ID 自動查詢使用者並顯示詳細資料。
-    Route::get('/users/{user}', function (Request $request, User $user) {
-        return Inertia::render('Users/Show', [
-            // 將 Laravel 查詢到的 User 資料傳給 Vue 頁面。
-            'user' => $user,
-        ]);
-    })->name('users.show');
+        // 依照網址中的 user ID 自動查詢使用者並顯示詳細資料。
+        Route::get('/users/{user}', function (Request $request, User $user) {
+            return Inertia::render('Users/Show', [
+                // 將 Laravel 查詢到的 User 資料傳給 Vue 頁面。
+                'user' => $user,
+            ]);
+        })->name('users.show');
+    });
 });
 
 // 將舊的會員網址重新導向新的使用者列表。
@@ -42,3 +46,9 @@ Route::redirect('/members', '/users');
 
 // 載入設定頁面的 Profile、Security 與 Appearance routes。
 require __DIR__ . '/settings.php';
+
+// 當上面的所有 Route 都無法匹配時，顯示自訂 404 頁面。
+// fallback 通常應該放在路由檔案的最後面。
+Route::fallback(function () {
+    return Inertia::render('Errors/NotFound');
+});
