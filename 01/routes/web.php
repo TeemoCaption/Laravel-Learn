@@ -1,48 +1,44 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Enums\Category;
 
+// 首頁提供給尚未登入的使用者，並作為登入版面的 home route。
 Route::get('/', function () {
-    // 使用者 GET / 時，回傳簡單文字
     return 'Laravel + Vue 學習系統';
 })->name('home');
 
-// 群組中的所有 Route 都必須先通過 auth Middleware
-Route::middleware('auth')->group(function () {
+Route::get('/categories/{category}', function (Category $category) {
+    // Laravel 會把 URL 的值自動轉換成 Category Enum
+    return $category->value;
+});
 
-    // 登入後顯示 Dashboard 頁面
+// 群組中的所有路由都必須先通過 auth middleware。
+Route::middleware('auth')->group(function () {
+    // 登入後顯示 Dashboard 頁面。
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    // 顯示使用者列表頁面。
     Route::get('/users', function (Request $request) {
-        // Laravel Service Container 會自動注入目前的 Request
-        // 因此不需要自己寫 new Request()
-
         return Inertia::render('Users/Index');
-    })
-        // 替使用者列表 Route 命名
-        ->name('users.index');
+    })->name('users.index');
 
-    Route::get('/users/{id}', function (Request $request, string $id) {
-        // Request 是 Laravel Service Container 自動注入的 Dependency
-        // $id 則來自網址中的 {id}
-
+    // 依照網址中的 user ID 自動查詢使用者並顯示詳細資料。
+    Route::get('/users/{user}', function (Request $request, User $user) {
         return Inertia::render('Users/Show', [
-            // 將 Route Parameter 傳給 Vue Page
-            'userId' => $id,
+            // 將 Laravel 查詢到的 User 資料傳給 Vue 頁面。
+            'user' => $user,
         ]);
-    })
-        // 限制 {id} 必須是數字，否則 Laravel 回傳 404
-        ->whereNumber('id')
-        // 替使用者詳細資料 Route 命名
-        ->name('users.show');
+    })->name('users.show');
 });
 
-// 將舊的會員網址重新導向新的 /users
+// 將舊的會員網址重新導向新的使用者列表。
 Route::redirect('/members', '/users');
 
-// 載入設定頁面的 Profile、Security 與 Appearance routes
+// 載入設定頁面的 Profile、Security 與 Appearance routes。
 require __DIR__ . '/settings.php';

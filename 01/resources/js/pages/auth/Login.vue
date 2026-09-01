@@ -3,6 +3,7 @@ import { Form, Head } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -12,10 +13,14 @@ import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
 defineOptions({
-    layout: {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
-    },
+    // 使用 AuthLayout component，並將 Login 頁面的文字傳給它
+    layout: [
+        AuthLayout,
+        {
+            title: 'Log in to your account',
+            description: 'Enter your email and password below to log in',
+        },
+    ],
 });
 
 defineProps<{
