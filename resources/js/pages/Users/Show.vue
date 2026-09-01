@@ -1,15 +1,24 @@
 <script setup lang="ts">
-// 接收 Laravel 透過 Inertia 傳過來的使用者 ID
+// 定義 Laravel 傳過來的 User 資料型別
+interface User {
+    id: number
+    name: string
+    email: string
+}
+
+// 接收 Laravel 透過 Inertia 傳過來的完整 User Model
 defineProps<{
-    userId: string
+    user: User
 }>()
 </script>
 
 <template>
     <main>
-        <!-- 顯示目前 Route 中指定的使用者 -->
+        <!-- Laravel 已透過 Route Model Binding 查出使用者 -->
         <h1>使用者詳細資料</h1>
 
-        <p>目前使用者 ID：{{ userId }}</p>
+        <p>ID：{{ user.id }}</p>
+        <p>姓名：{{ user.name }}</p>
+        <p>Email：{{ user.email }}</p>
     </main>
 </template>

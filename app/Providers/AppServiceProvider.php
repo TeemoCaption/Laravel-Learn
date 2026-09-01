@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * 註冊應用程式服務。
      */
     public function register(): void
     {
@@ -19,32 +21,12 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * 啟動應用程式服務。
      */
     public function boot(): void
     {
-        $this->configureDefaults();
-    }
-
-    /**
-     * Configure default behaviors for production-ready applications.
-     */
-    protected function configureDefaults(): void
-    {
-        Date::use(CarbonImmutable::class);
-
-        DB::prohibitDestructiveCommands(
-            app()->isProduction(),
-        );
-
-        Password::defaults(fn (): ?Password => app()->isProduction()
-            ? Password::min(12)
-                ->mixedCase()
-                ->letters()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()
-            : null,
-        );
+        // 明確指定 {user} Route Parameter
+        // 應該綁定到 User Model
+        Route::model('user', User::class);
     }
 }
