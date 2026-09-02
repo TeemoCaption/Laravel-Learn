@@ -22,9 +22,9 @@ test('guests can visit the users page without being redirected to login', functi
     $response->assertOk();
 });
 
-test('guests are forbidden from the admin page instead of being redirected to login', function () {
-    // 管理員頁面改由自訂 admin middleware 判斷權限，因此訪客收到 403。
+test('guests can visit the admin page while admin authorization is disabled', function () {
+    // 目前暫時註解 admin middleware，因此訪客可以直接存取管理員頁面。
     $response = $this->get(route('admin.index'));
 
-    $response->assertForbidden();
+    $response->assertOk();
 });

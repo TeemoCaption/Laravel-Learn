@@ -28,22 +28,22 @@ Route::middleware('auth')->group(function () {
 // --------------------------------------------------
 // 管理員路由
 // --------------------------------------------------
-// 不使用預設 auth middleware，改由自訂 admin middleware 判斷權限。
-Route::middleware('admin')->group(function () {
-    // 顯示管理員頁面。
-    Route::get('/admin', function () {
-        return Inertia::render('Admin/Index');
-    })->name('admin.index');
+// 暫時停用管理員權限驗證，保留 admin middleware 供日後重新啟用。
+// Route::middleware('admin')->group(function () {
+// 顯示管理員頁面。
+Route::get('/admin', function () {
+    return Inertia::render('Admin/Index');
+})->name('admin.index');
 
-    // 管理員提交測試訊息。
-    // POST Request 會受到 Laravel CSRF Protection 保護。
-    Route::post('/admin/message', function (Request $request) {
-        return back()->with(
-            'success',
-            "收到管理員訊息：{$request->input('message')}",
-        );
-    })->name('admin.message');
-});
+// 管理員提交測試訊息。
+// POST Request 會受到 Laravel CSRF Protection 保護。
+Route::post('/admin/message', function (Request $request) {
+    return back()->with(
+        'success',
+        "收到管理員訊息：{$request->input('message')}",
+    );
+})->name('admin.message');
+// });
 
 // 使用者相關 Route 不要求登入，
 // 每位使用者每分鐘最多只能存取 10 次。
