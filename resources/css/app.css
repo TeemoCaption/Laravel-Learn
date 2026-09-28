@@ -29,6 +29,14 @@ body {
     margin-bottom: 2.5rem;
 }
 
+/* 將搜尋圖片限制為適合標題區的小圖示，避免使用圖片原始尺寸。 */
+.search-icon {
+    display: block;
+    width: clamp(2.5rem, 6vw, 3.5rem);
+    height: auto;
+    object-fit: contain;
+}
+
 .eyebrow {
     margin: 0 0 0.75rem;
     color: #5271a5;

@@ -12,7 +12,9 @@
 <body>
     <main class="page-shell">
         <header class="page-heading">
+            <img class="search-icon" src="{{ asset('images/search.png') }}" alt="">
             @yield("header")
+            @include("sidemenu")
         </header>
 
         <section class="form-card" aria-labelledby="form-title">
