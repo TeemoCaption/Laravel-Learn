@@ -10,6 +10,157 @@
         'Noto Color Emoji';
 }
 
-h1{ 
-    font-size: 100px;
+/* 設定頁面基礎色彩與置中內容區。 */
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: #f4f7fb;
+    color: #172033;
+    font-family: var(--font-sans);
+}
+
+.page-shell {
+    width: min(100% - 2.5rem, 68rem);
+    margin-inline: auto;
+    padding-block: 4rem 6rem;
+}
+
+.page-heading {
+    margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.75rem;
+    color: #5271a5;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+/* 保留原本大標題的視覺，同時讓小螢幕能自然縮小。 */
+h1 {
+    margin: 0;
+    color: #172033;
+    font-size: clamp(3.5rem, 9vw, 6.25rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 1;
+}
+
+.test-link {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: #315b9a;
+    font-weight: 600;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+.test-link:hover {
+    color: #1e3f73;
+}
+
+/* 表單卡片提供明確的視覺層次與舒適留白。 */
+.form-card {
+    width: min(100%, 36rem);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border: 1px solid #e2e8f0;
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 1.5rem 4rem rgb(29 52 87 / 9%);
+}
+
+.form-card h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.form-intro {
+    margin: 0.5rem 0 1.75rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* 欄位使用一致的間距、圓角與清楚的鍵盤焦點狀態。 */
+.contact-form {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.form-field {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.form-field label {
+    color: #26354d;
+    font-size: 0.925rem;
+    font-weight: 600;
+}
+
+.form-field input {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.7rem;
+    background: #fbfcfe;
+    color: #172033;
+    font: inherit;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.form-field input::placeholder {
+    color: #94a3b8;
+}
+
+.form-field input:hover {
+    border-color: #94a3b8;
+}
+
+.form-field input:focus {
+    border-color: #3974c6;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgb(57 116 198 / 15%);
+}
+
+/* 讓送出按鈕容易辨識，並提供 hover 與鍵盤操作回饋。 */
+.submit-button {
+    min-height: 3.25rem;
+    margin-top: 0.25rem;
+    padding: 0.8rem 1.25rem;
+    border: 0;
+    border-radius: 0.7rem;
+    background: #315f9f;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.submit-button:hover {
+    transform: translateY(-1px);
+    background: #244b82;
+    box-shadow: 0 0.5rem 1rem rgb(49 95 159 / 20%);
+}
+
+.submit-button:focus-visible {
+    outline: 3px solid #8bb5ed;
+    outline-offset: 3px;
+}
+
+@media (max-width: 30rem) {
+    .page-shell {
+        width: min(100% - 1.5rem, 68rem);
+        padding-block: 2.5rem 4rem;
+    }
+
+    .page-heading {
+        margin-bottom: 1.75rem;
+    }
 }
