@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends("layouts.default")
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section("header")
+<p class="eyebrow">FIRST WEBSITE</p>
+<h1>This is a contact page!</h1>
+<a class="test-link" href="{{ route('testpage') }}">Go to test page</a>
+@endsection
 
-<body>
-    <h1>Contact</h1>
-</body>
 
-</html>
+@section("maincontent")
+<a href="#">Email</a>
+@endsection
+
+@section("footer")
+<h1>This is a footer!</h1>
+@endsection
